@@ -11,7 +11,7 @@ function createMeme(selectedImgId) {
         txt: 'insert top text',
         size: 50,
         align: 'center',
-        color: '',
+        color: 'white',
       },
     ],
   }
@@ -52,6 +52,14 @@ function getImgs() {
 
 function setLineText(lineTxt) {
   gMeme.lines[gMeme.selectedLineIdx].txt = lineTxt
+}
+
+function setTxtColor(color) {
+  gMeme.lines[gMeme.selectedLineIdx].color = color
+}
+
+function resizeFont(sizeChange) {
+  gMeme.lines[gMeme.selectedLineIdx].size += sizeChange === '+' ? 1 : -1
 }
 
 function _saveImgsToStorage() {

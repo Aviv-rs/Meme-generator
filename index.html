@@ -71,9 +71,23 @@
           <button class="btn-line btn-remove">🗑</button>
         </div>
         <div class="text-controls">
-          <button class="btn-text"></button><button class="btn-text"></button
-          ><button class="btn-text"></button><button class="btn-text"></button
-          ><button class="btn-text"></button><button class="btn-text"></button>
+          <input
+            type="color"
+            oninput="onSetTxtColor(this.value)"
+            name="txt-color"
+          />
+
+          <button onclick="onResizeFont(this.value)" value="+" class="btn-text">
+            +
+          </button>
+
+          <button onclick="onResizeFont(this.value)" value="-" class="btn-text">
+            -
+          </button>
+
+          <button class="btn-text"></button><button class="btn-text"></button>
+
+          <button class="btn-text"></button>
         </div>
       </div>
     </section>

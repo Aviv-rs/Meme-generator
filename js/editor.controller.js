@@ -17,6 +17,19 @@ function onSetLineText(lineTxt) {
   renderMeme(meme.selectedImgId)
 }
 
+function onSetTxtColor(color) {
+  const meme = getMeme()
+  setTxtColor(color)
+  renderMeme(meme.selectedImgId)
+}
+
+function onResizeFont(sizeChange) {
+  const meme = getMeme()
+
+  resizeFont(sizeChange)
+  renderMeme(meme.selectedImgId)
+}
+
 function openEditor() {
   document.querySelector('.editor-page').classList.remove('hidden')
 }
@@ -46,8 +59,8 @@ function renderMeme(imgId) {
 function drawText(txt, size, align, color, x, y) {
   gCtx.textAlign = align
   gCtx.lineWidth = 2
-  gCtx.fillStyle = 'white'
-  gCtx.strokeStyle = color
+  gCtx.fillStyle = color
+  // gCtx.strokeStyle = color
   gCtx.font = `${size}px impact`
   gCtx.fillText(txt, x, y)
   gCtx.strokeText(txt, x, y)
