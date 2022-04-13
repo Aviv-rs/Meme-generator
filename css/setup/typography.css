@@ -1,0 +1,16 @@
+@font-face {
+  font-family: impact;
+  src: url(../../fonts/impact/impact.ttf);
+}
+@font-face {
+  font-family: poppins-semi;
+  src: url(../../fonts/poppins/Poppins-SemiBold.ttf);
+}
+@font-face {
+  font-family: poppins;
+  src: url(../../fonts/poppins/Poppins-Regular.ttf);
+}
+@font-face {
+  font-family: poppins-extra;
+  src: url(../../fonts/poppins/Poppins-ExtraBold.ttf);
+}
