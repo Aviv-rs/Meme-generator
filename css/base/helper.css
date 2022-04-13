@@ -1,0 +1,39 @@
+/* list helpers */
+
+.clean-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* display helpers */
+
+.grid {
+  display: grid;
+}
+
+.flex {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+/* spacing helpers */
+
+.mb-3 {
+  margin-bottom: 1.5rem;
+}
+
+/* flex helpers */
+.flex.flex-column {
+  flex-direction: column;
+}
+
+.flex.space-around {
+  justify-content: space-around;
+}
+.flex.space-between {
+  justify-content: space-between;
+}

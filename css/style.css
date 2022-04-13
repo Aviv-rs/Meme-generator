@@ -13,12 +13,10 @@
 @import "components/main-footer.css";
 
 /* Meme selection gallery */
-@import "gallery/gallery-controls.css";
-@import "gallery/meme-gallery.css";
+@import "gallery/gallery.css";
 
 /* Meme editor */
-@import "editor/editor-controls.css";
-@import "editor/editor-canvas.css";
+@import "editor/editor.css";
 
 /* Media Queries */
 @import "mq/mq.css";

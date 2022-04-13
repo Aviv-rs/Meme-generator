@@ -1,0 +1,19 @@
+.editor-page {
+  background-color: #fcf0f0;
+  /* background-color: #121212; */
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+}
+
+.control-box {
+  background-color: cornsilk;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 500px;
+}
+
+.editor-canvas {
+  background-color: rgb(246, 161, 161);
+}

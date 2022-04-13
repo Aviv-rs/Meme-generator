@@ -1,0 +1,23 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: unset;
+}
+
+button {
+  border: unset;
+  color: var(--primary-clr-600);
+  background-color: unset;
+  cursor: pointer;
+}
+
+img {
+  width: 100%;
+}
