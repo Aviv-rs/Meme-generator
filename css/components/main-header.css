@@ -1,3 +1,16 @@
 .genre-list {
   gap: 15px;
 }
+
+.main-header {
+  font-family: Impact;
+  align-items: center;
+  padding-inline-end: 200px;
+  padding-inline-start: 200px;
+  background-color: var(--primary-clr-200);
+}
+
+.main-nav .page-link {
+  height: 100px;
+  width: 100px;
+}

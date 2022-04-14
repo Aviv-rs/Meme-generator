@@ -8,7 +8,13 @@ function createMeme(selectedImgId) {
     selectedLineIdx: 0,
     lines: [
       {
-        txt: 'insert top text',
+        txt: 'insert meme text',
+        size: 50,
+        align: 'center',
+        color: 'white',
+      },
+      {
+        txt: 'insert meme text',
         size: 50,
         align: 'center',
         color: 'white',
@@ -24,6 +30,8 @@ function createImgs() {
       createImg('img/1.jpg', ['politics']),
       createImg('img/2.jpg', ['cute', 'animals']),
       createImg('img/3.jpg', ['cute', 'animals']),
+      createImg('img/4.jpg', ['cute', 'animals']),
+      createImg('img/5.jpg', ['cute', 'baby']),
     ]
   }
   gImgs = imgs
@@ -60,6 +68,12 @@ function setTxtColor(color) {
 
 function resizeFont(sizeChange) {
   gMeme.lines[gMeme.selectedLineIdx].size += sizeChange === '+' ? 1 : -1
+}
+
+function switchLine() {
+  gMeme.selectedLineIdx >= gMeme.lines.length - 1
+    ? (gMeme.selectedLineIdx = 0)
+    : gMeme.selectedLineIdx++
 }
 
 function _saveImgsToStorage() {

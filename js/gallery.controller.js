@@ -16,6 +16,7 @@ function renderGallery() {
 }
 
 function onMoveToGallery() {
+  document.querySelector('.meme-text').value = ''
   closeEditor()
   openGallery()
 }

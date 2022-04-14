@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+html {
+  font-family: poppins;
+  color: var(--secondary-clr-600);
+}
+
 body {
   margin: 0;
 }
@@ -12,6 +17,7 @@ a {
 }
 
 button {
+  padding: 0;
   border: unset;
   color: var(--primary-clr-600);
   background-color: unset;

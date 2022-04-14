@@ -1,5 +1,8 @@
-.main-layout {
-  margin: 0 auto;
-  padding-left: 1.6rem;
-  padding-right: 1.6rem;
+.page-container {
+  height: 100vh;
+  padding: 20px;
+  display: grid;
+  grid-template-rows: 100px 1fr;
+  grid-template-columns: 1fr;
+  background-color: var(--primary-clr-100);
 }

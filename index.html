@@ -8,89 +8,103 @@
     <title>Meme Generator</title>
   </head>
   <body onload="onGalleryInit()">
-    <header class="main-header flex mb-3 space-around">
-      <div class="logo">Meme generator</div>
-      <ul class="main-nav clean-list flex">
-        <li>
-          <button onclick="onMoveToGallery()" class="page-link">Gallery</button>
-        </li>
-        <li><button class="page-link">My memes</button></li>
-        <li><button class="page-link">About</button></li>
-      </ul>
-    </header>
-    <section class="gallery-page flex flex-column">
-      <section class="gallery-controls flex space-around mb-3">
-        <input
-          type="search"
-          name="meme-search"
-          placeholder="Search for memes"
-          class="meme-search"
-        />
-        <ul class="genre-list clean-list flex">
-          <li class="genre">
-            <button onclick="chooseGenre(this.value)" class="choose-genre">
-              Cute
+    <div class="page-container">
+      <header class="main-header flex mb-3 space-between">
+        <div class="logo">Meme generator</div>
+        <ul class="main-nav clean-list flex">
+          <li>
+            <button onclick="onMoveToGallery()" class="page-link">
+              Gallery
             </button>
           </li>
-          <li class="genre">
-            <button onclick="chooseGenre(this.value)" class="choose-genre">
-              Sports
-            </button>
-          </li>
-          <li class="genre">
-            <button onclick="chooseGenre(this.value)" class="choose-genre">
-              Movies
-            </button>
-          </li>
-          <li class="genre">
-            <button onclick="chooseGenre(this.value)" class="choose-genre">
-              Political
-            </button>
-          </li>
+          <li><button class="page-link">My memes</button></li>
+          <li><button class="page-link">About</button></li>
         </ul>
+      </header>
+      <section class="gallery-page flex flex-column">
+        <section class="gallery-controls flex mb-3">
+          <input
+            type="search"
+            name="meme-search"
+            placeholder="Search for memes"
+            class="meme-search"
+          />
+          <ul class="genre-list clean-list flex">
+            <li class="genre">
+              <button onclick="chooseGenre(this.value)" class="choose-genre">
+                Cute
+              </button>
+            </li>
+            <li class="genre">
+              <button onclick="chooseGenre(this.value)" class="choose-genre">
+                Sports
+              </button>
+            </li>
+            <li class="genre">
+              <button onclick="chooseGenre(this.value)" class="choose-genre">
+                Movies
+              </button>
+            </li>
+            <li class="genre">
+              <button onclick="chooseGenre(this.value)" class="choose-genre">
+                Political
+              </button>
+            </li>
+          </ul>
+        </section>
+
+        <section class="meme-gallery grid"></section>
       </section>
 
-      <section class="meme-gallery grid"></section>
-    </section>
-
-    <section class="hidden flex editor-page">
-      <div class="canvas-container">
-        <canvas class="editor-canvas" width="500" height="500"></canvas>
-      </div>
-
-      <div class="control-box flex">
-        <input
-          oninput="onSetLineText(this.value)"
-          type="text"
-          placeholder="Enter meme text"
-          class="meme-text"
-        />
-        <div class="line-controls">
-          <button class="btn-line btn-switch">⇆</button>
-          <button class="btn-line btn-add">+</button>
-          <button class="btn-line btn-remove">🗑</button>
+      <section class="hidden flex editor-page space-around">
+        <div class="canvas-container">
+          <canvas class="editor-canvas" width="500" height="500"></canvas>
         </div>
-        <div class="text-controls">
+
+        <div class="control-box grid">
           <input
-            type="color"
-            oninput="onSetTxtColor(this.value)"
-            name="txt-color"
+            oninput="onSetLineText(this.value)"
+            type="text"
+            placeholder="Enter meme text"
+            class="meme-text"
           />
+          <div class="line-controls">
+            <button onclick="onSwitchLine()" class="btn-line btn-switch">
+              ⇆
+            </button>
+            <button class="btn-line btn-add">+</button>
+            <button class="btn-line btn-remove">🗑</button>
+          </div>
+          <div class="text-controls">
+            <input
+              type="color"
+              oninput="onSetTxtColor(this.value)"
+              name="txt-color"
+            />
 
-          <button onclick="onResizeFont(this.value)" value="+" class="btn-text">
-            +
-          </button>
+            <button
+              onclick="onResizeFont(this.value)"
+              value="+"
+              class="btn-increase"
+            >
+              A⁺
+            </button>
 
-          <button onclick="onResizeFont(this.value)" value="-" class="btn-text">
-            -
-          </button>
+            <button
+              onclick="onResizeFont(this.value)"
+              value="-"
+              class="btn-decrease"
+            >
+              A⁻
+            </button>
 
-          <button class="btn-text"></button><button class="btn-text"></button>
+            <button class="btn-text"></button><button class="btn-text"></button>
 
-          <button class="btn-text"></button>
+            <button class="btn-text"></button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
 
     <script src="js/services/storage.service.js"></script>
     <script src="js/services/util.service.js"></script>
