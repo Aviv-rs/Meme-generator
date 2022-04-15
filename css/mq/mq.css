@@ -1,0 +1,133 @@
+/* mobile only */
+
+@media (max-width: 640px) {
+  .main-header {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: inset 0px -2px 2px 0px #0b0339;
+  }
+
+  .main-header .main-nav {
+    flex-direction: column;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.6s;
+    justify-content: flex-end;
+    position: absolute;
+    transform: translateY(100%);
+    left: 0;
+    bottom: 0;
+    align-items: center;
+    background-color: var(--primary-clr-200);
+  }
+
+  .main-header .logo-container {
+    display: flex;
+    align-self: flex-start;
+  }
+
+  .main-header .toggle-menu {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  .main-nav .nav-link {
+    width: 100%;
+  }
+
+  body.menu-open .main-nav {
+    max-height: 100vh;
+  }
+
+  body.menu-open .main-nav > li {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  body.menu-open .toggle-menu span {
+    display: none;
+  }
+
+  body.menu-open .toggle-menu::before {
+    content: "X";
+  }
+
+  .gallery-page {
+    align-items: center;
+    margin-block-start: 80px;
+  }
+
+  .gallery-controls {
+    justify-content: center;
+  }
+}
+
+/* small */
+@media (min-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+
+  .main-header {
+    padding-inline-end: 0;
+    padding-inline-start: 0;
+    border-radius: 4em;
+  }
+
+  .main-header .logo-container {
+    margin-inline-start: 2em;
+  }
+
+  .toggle-menu {
+    display: none;
+  }
+
+  .page-container.gallery-page {
+    max-width: 600px;
+  }
+
+  .meme-gallery {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+}
+
+/* medium */
+@media (min-width: 900px) {
+  html {
+    font-size: 14px;
+  }
+
+  .page-container.gallery-page {
+    max-width: 890px;
+  }
+
+  .meme-gallery {
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+  }
+}
+
+/* large */
+@media (min-width: 1030px) {
+  html {
+    font-size: 16px;
+  }
+
+  .main-header {
+    padding-inline-end: 10rem;
+    padding-inline-start: 10rem;
+  }
+
+  .page-container.gallery-page {
+    max-width: 100%;
+  }
+
+  .meme-gallery {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}

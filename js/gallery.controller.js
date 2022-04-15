@@ -28,3 +28,7 @@ function closeEditor() {
 function openGallery() {
   document.querySelector('.gallery-page').classList.remove('hidden')
 }
+
+function onToggleMenu() {
+  document.body.classList.toggle('menu-open')
+}

@@ -1,6 +1,6 @@
 'use strict'
 
-let gElCanvas, gCtx
+let gElCanvas, gCtx, gCanvasURL
 
 function onEditorInit(imgId) {
   closeGallery()
@@ -30,8 +30,8 @@ function onResizeFont(sizeChange) {
 }
 
 function onSwitchLine() {
-  const elTxtInput = document.querySelector('.meme-text')
   switchLine()
+  const elTxtInput = document.querySelector('.meme-text')
   const meme = getMeme()
   elTxtInput.value =
     meme.lines[meme.selectedLineIdx].txt !== 'insert meme text'
@@ -39,7 +39,25 @@ function onSwitchLine() {
       : ''
 
   renderMeme(meme.selectedImgId)
-  setTimeout(renderLineFocus, 100)
+}
+
+function onAddLine() {
+  const meme = getMeme()
+  addLine()
+  meme.selectedLineIdx = 0
+  renderMeme(meme.selectedImgId)
+}
+function onRemoveLine() {
+  const meme = getMeme()
+  // debugger
+  removeLine()
+  renderMeme(meme.selectedImgId)
+}
+
+function onAlignTxt(align) {
+  const meme = getMeme()
+  alignTxt(align)
+  renderMeme(meme.selectedImgId)
 }
 
 function openEditor() {
@@ -50,59 +68,77 @@ function closeGallery() {
   document.querySelector('.gallery-page').classList.add('hidden')
 }
 
+function onDownloadMeme(elLink) {
+  const meme = getMeme()
+  renderMeme(meme.selectedImgId, true)
+
+  elLink.href = gElCanvas.toDataURL()
+  elLink.download = 'my meme'
+}
+
+// function saveCanvasAsUrl() {
+//   gCanvasURL = gElCanvas.toDataURL()
+// }
+
+function renderCanvasAsImg() {
+  const img = new Image()
+  const src = gCanvasURL
+  img.src = src
+  img.onload = () => {
+    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+  }
+}
+
 function renderMeme(imgId) {
   const meme = getMeme()
   const imgUrl = getImgById(imgId).url
   const img = new Image()
+
   img.src = imgUrl
 
   img.onload = () => {
     gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
     meme.lines.forEach((line, idx) => {
-      const lineY =
-        meme.lines.length - 1 === idx
-          ? gElCanvas.height - line.size / 2
-          : line.size + idx * line.size
-      drawText(
-        line.txt,
-        line.size,
-        line.align,
-        line.color,
-        gElCanvas.width / 2,
-        lineY
-      )
-      renderLineFocus()
+      // Load font before calculations
+      gCtx.font = `${line.size}px impact`
+      const txtMetrics = gCtx.measureText(line.txt)
+      let x, y
+      if (line.align === 'center') x = gElCanvas.width / 2
+      else if (line.align === 'left') x = 10
+      else x = gElCanvas.width - 10
+      if (line.baseLine === 'middle') y = gElCanvas.height / 2
+      else if (line.baseLine === 'top') y = 10
+      else {
+        y = gElCanvas.height - 10
+      }
+      drawText(line.txt, line.color, x, y, line.align, line.baseLine)
+      if (idx === meme.selectedLineIdx) {
+        const txtHeight = line.size
+        if (line.align === 'center') x -= txtMetrics.width / 2
+        else if (line.align === 'right') x -= txtMetrics.width
+
+        if (line.baseLine === 'middle')
+          y -= txtMetrics.fontBoundingBoxDescent / 2
+        else if (line.baseLine === 'bottom') y -= line.size
+
+        drawRect(x, y, txtMetrics.width, txtHeight)
+      }
     })
   }
 }
 
-function renderLineFocus() {
-  const meme = getMeme()
-  const textSize = meme.lines[meme.selectedLineIdx].size
-  const lineYend =
-    meme.lines.length - 1 === meme.selectedLineIdx
-      ? gElCanvas.height - textSize / 2
-      : textSize + meme.selectedLineIdx * textSize
-
-  drawRect(
-    textSize,
-    lineYend - textSize + 10,
-    gElCanvas.width - textSize * 2,
-    textSize
-  )
+function drawRect(x, y, width, height) {
+  gCtx.beginPath()
+  gCtx.rect(x, y, width, height)
+  gCtx.stroke()
 }
 
-function drawText(txt, size, align, color, x, y) {
+function drawText(txt, color, x, y, align, baseLine) {
   gCtx.textAlign = align
+  gCtx.textBaseline = baseLine
   gCtx.lineWidth = 2
   gCtx.fillStyle = color
-  gCtx.font = `${size}px impact`
+
   gCtx.fillText(txt, x, y)
   gCtx.strokeText(txt, x, y)
-}
-
-function drawRect(x, y, xEnd, Yend) {
-  gCtx.beginPath()
-  gCtx.rect(x, y, xEnd, Yend)
-  gCtx.stroke()
 }

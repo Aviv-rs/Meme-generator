@@ -1,9 +1,8 @@
 .gallery-page {
-  /* margin: 0 auto; */
-  padding-inline-start: 1rem;
-  padding-top: 1rem;
   background-color: var(--secondary-clr-300);
   color: var(--secondary-clr-600);
+  padding: 1rem;
+  overflow: auto;
 }
 
 .gallery-controls {
@@ -14,9 +13,7 @@
 
 .meme-gallery {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  /* grid-template-columns: repeat(5, minmax(200px, 1fr)); */
-  /* margin: 0 auto; */
-  gap: 3rem;
+  gap: 2rem;
 }
 
 .meme {

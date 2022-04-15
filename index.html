@@ -4,13 +4,25 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="img/doge-icon.png" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
     <title>Meme Generator</title>
   </head>
   <body onload="onGalleryInit()">
     <div class="page-container">
-      <header class="main-header flex mb-3 space-between">
-        <div class="logo">Meme generator</div>
+      <header class="main-header flex space-between">
+        <div class="logo-container">
+          <div class="logo-img-container">
+            <img class="logo-img" src="img/logo-bw.png" alt="img" />
+          </div>
+          <div class="logo-txt-container">
+            <p>Meme Generator</p>
+          </div>
+        </div>
+        <button onclick="onToggleMenu()" class="toggle-menu">
+          <span>☰</span>
+        </button>
+
         <ul class="main-nav clean-list flex">
           <li>
             <button onclick="onMoveToGallery()" class="page-link">
@@ -69,11 +81,21 @@
             class="meme-text"
           />
           <div class="line-controls">
-            <button onclick="onSwitchLine()" class="btn-line btn-switch">
+            <button
+              onclick="onSwitchLine()"
+              class="styled-btn btn-line btn-switch"
+            >
               ⇆
             </button>
-            <button class="btn-line btn-add">+</button>
-            <button class="btn-line btn-remove">🗑</button>
+            <button onclick="onAddLine()" class="styled-btn btn-line btn-add">
+              +
+            </button>
+            <button
+              onclick="onRemoveLine()"
+              class="styled-btn btn-line btn-remove"
+            >
+              🗑
+            </button>
           </div>
           <div class="text-controls">
             <input
@@ -85,7 +107,7 @@
             <button
               onclick="onResizeFont(this.value)"
               value="+"
-              class="btn-increase"
+              class="styled-btn btn-increase"
             >
               A⁺
             </button>
@@ -93,14 +115,23 @@
             <button
               onclick="onResizeFont(this.value)"
               value="-"
-              class="btn-decrease"
+              class="styled-btn btn-decrease"
             >
               A⁻
             </button>
 
-            <button class="btn-text"></button><button class="btn-text"></button>
-
-            <button class="btn-text"></button>
+            <button onclick="onAlignTxt('L')" class="btn-align-L styled-btn">
+              ⬱
+            </button>
+            <button onclick="onAlignTxt('C')" class="btn-align-C styled-btn">
+              ☰
+            </button>
+            <button onclick="onAlignTxt('R')" class="btn-align-R styled-btn">
+              ⇶
+            </button>
+            <a href="#" onclick="onDownloadMeme(this)" download="my meme"
+              >Download</a
+            >
           </div>
         </div>
       </section>
