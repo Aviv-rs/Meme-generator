@@ -2,6 +2,8 @@
 let gMeme
 
 function createMeme(selectedImgId) {
+  const canvas = getCanvas()
+
   gMeme = {
     selectedImgId,
     selectedLineIdx: 0,
@@ -12,13 +14,18 @@ function createMeme(selectedImgId) {
         align: 'center',
         color: 'white',
         baseLine: 'top',
+        isDrag: false,
+        pos: { x: canvas.width / 2, y: 10 },
       },
+
       {
         txt: 'insert meme text',
         size: 40,
         align: 'center',
         color: 'white',
         baseLine: 'bottom',
+        isDrag: false,
+        pos: { x: canvas.width / 2, y: canvas.height - 10 },
       },
     ],
   }
@@ -29,15 +36,15 @@ function getMeme() {
 }
 
 function setLineText(lineTxt) {
-  gMeme.lines[gMeme.selectedLineIdx].txt = lineTxt
+  getSelectedLine().txt = lineTxt
 }
 
 function setTxtColor(color) {
-  gMeme.lines[gMeme.selectedLineIdx].color = color
+  getSelectedLine().color = color
 }
 
 function resizeFont(sizeChange) {
-  gMeme.lines[gMeme.selectedLineIdx].size += sizeChange === '+' ? 1 : -1
+  getSelectedLine().size += sizeChange === '+' ? 1 : -1
 }
 
 function switchLine() {
@@ -46,13 +53,40 @@ function switchLine() {
     : gMeme.selectedLineIdx++
 }
 
+function getSelectedLine() {
+  return gMeme.lines[gMeme.selectedLineIdx]
+}
+
+function isSelectedLinePressed(clickedPos) {
+  const selectedLine = getSelectedLine()
+  const txtMetrics = gCtx.measureText(selectedLine.txt)
+  const txtWidth = txtMetrics.width
+  const { pos } = selectedLine
+  return (
+    clickedPos.x > pos.x - txtWidth / 2 &&
+    clickedPos.x < pos.x + txtWidth / 2 &&
+    clickedPos.y > pos.y &&
+    clickedPos.y < pos.y + selectedLine.size
+  )
+}
+
+function moveSelectedLine(dx, dy) {
+  const selectedLine = getSelectedLine()
+  selectedLine.pos.x += dx
+  selectedLine.pos.y += dy
+}
+
 function addLine() {
+  const canvas = getCanvas()
+
   const newLine = {
     txt: 'insert meme text',
     size: 40,
     align: 'center',
     color: 'white',
     baseLine: 'middle',
+    isDrag: false,
+    pos: { x: canvas.width / 2, y: canvas.height / 2 },
   }
   switch (gMeme.lines.length) {
     case 0:
@@ -84,16 +118,24 @@ function removeLine() {
   gMeme.selectedLineIdx--
 }
 
+function setLineDrag(isDrag) {
+  getSelectedLine().isDrag = isDrag
+}
+
 function alignTxt(align) {
+  const currLine = getSelectedLine()
   switch (align) {
     case 'L':
-      gMeme.lines[gMeme.selectedLineIdx].align = 'left'
+      getSelectedLine().align = 'left'
+      currLine.pos.x = 10
       break
     case 'C':
-      gMeme.lines[gMeme.selectedLineIdx].align = 'center'
+      getSelectedLine().align = 'center'
+      currLine.pos.x = gElCanvas.width / 2
       break
     case 'R':
-      gMeme.lines[gMeme.selectedLineIdx].align = 'right'
+      getSelectedLine().align = 'right'
+      currLine.pos.x = gElCanvas.width - 10
       break
   }
 }

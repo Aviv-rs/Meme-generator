@@ -7,6 +7,7 @@
   align-items: center;
   background-color: var(--primary-clr-200);
   margin-bottom: 2rem;
+  background: linear-gradient(var(--secondary-clr-300), var(--primary-clr-200));
 }
 
 .logo-container {
@@ -24,11 +25,16 @@
   display: inline-block;
 }
 
+.main-nav .page-link:first-of-type {
+  border-inline-start: 1px solid rgb(62, 62, 62);
+}
+
 .main-nav .page-link {
   box-shadow: inset 0 0 0 0 #54b3d6;
   height: 100px;
   width: 100px;
   transition: color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-inline-end: 1px solid rgb(62, 62, 62);
 }
 
 .main-nav .page-link:hover {

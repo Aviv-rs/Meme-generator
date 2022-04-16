@@ -1,8 +1,10 @@
 'use strict'
 
-let gElCanvas, gCtx, gCanvasURL
+let gElCanvas, gCtx
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
 
 function onEditorInit(imgId) {
+  document.querySelector('.gallery-link').classList.remove('active')
   closeGallery()
   gElCanvas = document.querySelector('.editor-canvas')
   gCtx = gElCanvas.getContext('2d')
@@ -10,16 +12,111 @@ function onEditorInit(imgId) {
   renderMeme(imgId)
   openEditor()
   resizeCanvas()
+
+  if (gElCanvas.width < 500) createMeme(imgId)
+  renderMeme(imgId)
   addListeners()
+}
+
+function renderMeme(imgId, isDownload) {
+  const elLink = document.querySelector('.download-meme')
+  const meme = getMeme()
+  const imgUrl = getImgById(imgId).url
+  const img = new Image()
+
+  img.src = imgUrl
+
+  img.onload = () => {
+    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+    meme.lines.forEach((line, idx) => {
+      // Load font before calculations
+      gCtx.font = `${line.size}px impact`
+      const txtMetrics = gCtx.measureText(line.txt)
+      let x = line.pos.x
+      let y = line.pos.y
+
+      drawText(line.txt, line.color, x, y, line.align, line.baseLine)
+
+      if (idx === meme.selectedLineIdx && !isDownload) {
+        const txtHeight = line.size
+        if (line.align === 'center') x -= txtMetrics.width / 2
+        else if (line.align === 'right') x -= txtMetrics.width
+
+        if (line.baseLine === 'middle')
+          y -= txtMetrics.fontBoundingBoxDescent / 2
+        else if (line.baseLine === 'bottom') y -= line.size
+
+        drawRect(x, y, txtMetrics.width, txtHeight)
+      }
+    })
+    if (isDownload) {
+      elLink.href = gElCanvas.toDataURL()
+      elLink.download = 'my meme'
+      elLink.click()
+    }
+  }
 }
 
 function addListeners() {
   const meme = getMeme()
-
   window.addEventListener('resize', () => {
     resizeCanvas()
     renderMeme(meme.selectedImgId)
   })
+  addMouseListeners()
+  addTouchListeners()
+}
+
+function addMouseListeners() {
+  gElCanvas.addEventListener('mousemove', onMove)
+  gElCanvas.addEventListener('mousedown', onDown)
+  gElCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+  gElCanvas.addEventListener('touchmove', onMove)
+  gElCanvas.addEventListener('touchstart', onDown)
+  gElCanvas.addEventListener('touchend', onUp)
+}
+
+function onDown(ev) {
+  const pos = getEvPos(ev)
+  if (!isSelectedLinePressed(pos)) return
+  setLineDrag(true)
+  document.body.style.cursor = 'grabbing'
+}
+
+function onMove(ev) {
+  const selectedLine = getSelectedLine()
+  if (!selectedLine.isDrag) return
+  const meme = getMeme()
+  const pos = getEvPos(ev)
+  const dx = pos.x - selectedLine.pos.x
+  const dy = pos.y - selectedLine.pos.y
+  moveSelectedLine(dx, dy)
+  selectedLine.pos = pos
+  renderMeme(meme.selectedImgId)
+}
+
+function onUp() {
+  setLineDrag(false)
+  document.body.style.cursor = 'grab'
+}
+
+function getEvPos(ev) {
+  let pos = {
+    x: ev.offsetX,
+    y: ev.offsetY,
+  }
+  if (gTouchEvs.includes(ev.type)) {
+    ev.preventDefault()
+    ev = ev.changedTouches[0]
+    pos = {
+      x: ev.pageX - ev.target.offsetLeft,
+      y: ev.pageY - ev.target.offsetTop,
+    }
+  }
+  return pos
 }
 
 function resizeCanvas() {
@@ -50,10 +147,9 @@ function onSwitchLine() {
   switchLine()
   const elTxtInput = document.querySelector('.meme-text')
   const meme = getMeme()
+  const selectedLine = getSelectedLine()
   elTxtInput.value =
-    meme.lines[meme.selectedLineIdx].txt !== 'insert meme text'
-      ? meme.lines[meme.selectedLineIdx].txt
-      : ''
+    selectedLine.txt !== 'insert meme text' ? selectedLine.txt : ''
 
   renderMeme(meme.selectedImgId)
 }
@@ -72,6 +168,7 @@ function onRemoveLine() {
 
 function onAlignTxt(align) {
   const meme = getMeme()
+
   alignTxt(align)
   renderMeme(meme.selectedImgId)
 }
@@ -89,62 +186,8 @@ function onDownloadMeme() {
   renderMeme(meme.selectedImgId, true)
 }
 
-function saveCanvasAsUrl() {
-  gCanvasURL = gElCanvas.toDataURL()
-}
-
-function renderCanvasAsImg() {
-  const img = new Image()
-  const src = gCanvasURL
-  img.src = src
-  img.onload = () => {
-    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-  }
-}
-
-function renderMeme(imgId, isDownload) {
-  const elLink = document.querySelector('.download-meme')
-  const meme = getMeme()
-  const imgUrl = getImgById(imgId).url
-  const img = new Image()
-
-  img.src = imgUrl
-
-  img.onload = () => {
-    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-    meme.lines.forEach((line, idx) => {
-      // Load font before calculations
-      gCtx.font = `${line.size}px impact`
-      const txtMetrics = gCtx.measureText(line.txt)
-      let x, y
-      if (line.align === 'center') x = gElCanvas.width / 2
-      else if (line.align === 'left') x = 10
-      else x = gElCanvas.width - 10
-      if (line.baseLine === 'middle') y = gElCanvas.height / 2
-      else if (line.baseLine === 'top') y = 10
-      else {
-        y = gElCanvas.height - 10
-      }
-      drawText(line.txt, line.color, x, y, line.align, line.baseLine)
-
-      if (idx === meme.selectedLineIdx && !isDownload) {
-        const txtHeight = line.size
-        if (line.align === 'center') x -= txtMetrics.width / 2
-        else if (line.align === 'right') x -= txtMetrics.width
-
-        if (line.baseLine === 'middle')
-          y -= txtMetrics.fontBoundingBoxDescent / 2
-        else if (line.baseLine === 'bottom') y -= line.size
-
-        drawRect(x, y, txtMetrics.width, txtHeight)
-      }
-    })
-    if (isDownload) {
-      elLink.href = gElCanvas.toDataURL()
-      elLink.download = 'my meme'
-      elLink.click()
-    }
-  }
+function getCanvas() {
+  return gElCanvas
 }
 
 function drawRect(x, y, width, height) {

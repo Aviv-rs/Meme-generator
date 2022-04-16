@@ -104,6 +104,10 @@
     margin-inline-start: 2em;
   }
 
+  .main-header .main-nav {
+    margin-inline-end: 3em;
+  }
+
   .toggle-menu {
     display: none;
   }

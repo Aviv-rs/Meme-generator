@@ -5,4 +5,5 @@
   display: flex;
   flex-direction: column;
   background-color: var(--primary-clr-100);
+  background-image: url("../../img/page-bg.jpg");
 }

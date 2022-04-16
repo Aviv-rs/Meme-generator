@@ -3,6 +3,7 @@
   color: var(--secondary-clr-600);
   padding: 1rem;
   overflow: auto;
+  background-image: url("../../img/meme-wallpaper-rouge.jpg");
 }
 
 .gallery-controls {
@@ -13,6 +14,10 @@
 
 .gallery-controls .choose-genre {
   font-size: 1rem;
+}
+
+.gallery-controls .choose-genre:hover {
+  color: var(--primary-clr-300);
 }
 
 .meme-gallery {

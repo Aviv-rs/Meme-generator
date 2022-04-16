@@ -16,6 +16,8 @@ function renderGallery(filter) {
 }
 
 function onMoveToGallery() {
+  document.querySelector('.gallery-link').classList.add('active')
+
   document.body.classList.remove('menu-open')
   document.querySelector('.meme-text').value = ''
   closeEditor()
