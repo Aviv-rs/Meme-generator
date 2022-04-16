@@ -1,6 +1,5 @@
 'use strict'
-let gMeme, gImgs
-const IMGS_KEY = 'memeImgs'
+let gMeme
 
 function createMeme(selectedImgId) {
   gMeme = {
@@ -25,52 +24,8 @@ function createMeme(selectedImgId) {
   }
 }
 
-function createImgs() {
-  let imgs = loadFromStorage(IMGS_KEY)
-  if (!imgs || !imgs.length) {
-    imgs = [
-      createImg('img/1.jpg', ['politics']),
-      createImg('img/2.jpg', ['cute', 'animals']),
-      createImg('img/3.jpg', ['cute', 'animals']),
-      createImg('img/4.jpg', ['cute', 'animals']),
-      createImg('img/5.jpg', ['cute', 'baby']),
-      createImg('img/6.jpg', ['cute', 'baby']),
-      createImg('img/7.jpg', ['cute', 'baby']),
-      createImg('img/8.jpg', ['cute', 'baby']),
-      createImg('img/9.jpg', ['cute', 'baby']),
-      createImg('img/10.jpg', ['cute', 'baby']),
-      createImg('img/11.jpg', ['cute', 'baby']),
-      createImg('img/12.jpg', ['cute', 'baby']),
-      createImg('img/13.jpg', ['cute', 'baby']),
-      createImg('img/14.jpg', ['cute', 'baby']),
-      createImg('img/15.jpg', ['cute', 'baby']),
-      createImg('img/16.jpg', ['cute', 'baby']),
-      createImg('img/17.jpg', ['cute', 'baby']),
-      createImg('img/18.jpg', ['cute', 'baby']),
-    ]
-  }
-  gImgs = imgs
-  _saveImgsToStorage()
-}
-
-function getImgById(imgId) {
-  return gImgs.find(img => img.id === imgId)
-}
-
-function createImg(url, keywords) {
-  return {
-    id: makeId(),
-    url,
-    keywords,
-  }
-}
-
 function getMeme() {
   return gMeme
-}
-
-function getImgs() {
-  return gImgs
 }
 
 function setLineText(lineTxt) {
@@ -141,8 +96,4 @@ function alignTxt(align) {
       gMeme.lines[gMeme.selectedLineIdx].align = 'right'
       break
   }
-}
-
-function _saveImgsToStorage() {
-  saveToStorage(IMGS_KEY, gImgs)
 }

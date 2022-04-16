@@ -39,27 +39,45 @@
             type="search"
             name="meme-search"
             placeholder="Search for memes"
-            class="meme-search"
+            oninput="onSearchMeme(this.value)"
+            class="meme-search capsule"
           />
           <ul class="genre-list clean-list flex">
             <li class="genre">
-              <button onclick="chooseGenre(this.value)" class="choose-genre">
+              <button
+                onclick="onFilterByGenre(this.innerText)"
+                class="choose-genre"
+              >
                 Cute
               </button>
             </li>
             <li class="genre">
-              <button onclick="chooseGenre(this.value)" class="choose-genre">
-                Sports
+              <button
+                onclick="onFilterByGenre(this.innerText)"
+                class="choose-genre"
+              >
+                Funny
               </button>
             </li>
             <li class="genre">
-              <button onclick="chooseGenre(this.value)" class="choose-genre">
+              <button
+                onclick="onFilterByGenre(this.innerText)"
+                class="choose-genre"
+              >
                 Movies
               </button>
             </li>
             <li class="genre">
-              <button onclick="chooseGenre(this.value)" class="choose-genre">
-                Political
+              <button
+                onclick="onFilterByGenre(this.innerText)"
+                class="choose-genre"
+              >
+                Politics
+              </button>
+            </li>
+            <li class="genre">
+              <button onclick="onFilterByGenre('')" class="choose-genre">
+                All
               </button>
             </li>
           </ul>

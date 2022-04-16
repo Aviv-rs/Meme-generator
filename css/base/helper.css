@@ -59,3 +59,8 @@
 .styled-btn:active {
   box-shadow: inset 0px 4px 2px 1px rgb(0 0 0 / 60%);
 }
+
+/* design helpers */
+.capsule {
+  border-radius: 4em;
+}

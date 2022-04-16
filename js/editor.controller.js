@@ -9,7 +9,6 @@ function onEditorInit(imgId) {
   createMeme(imgId)
   renderMeme(imgId)
   openEditor()
-  resizeCanvas()
   addListeners()
 }
 

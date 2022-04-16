@@ -5,8 +5,8 @@ function onGalleryInit() {
   renderGallery()
 }
 
-function renderGallery() {
-  const imgs = getImgs()
+function renderGallery(filter) {
+  const imgs = getImgs(filter)
   let htmlStr = imgs.map(
     img =>
       `<div class="meme"><img onclick="onEditorInit('${img.id}')" src="${img.url}" alt="A picture of a meme template" /> </div>`
@@ -19,6 +19,14 @@ function onMoveToGallery() {
   document.querySelector('.meme-text').value = ''
   closeEditor()
   openGallery()
+}
+
+function onSearchMeme(keyword) {
+  renderGallery(keyword)
+}
+
+function onFilterByGenre(genre) {
+  renderGallery(genre)
 }
 
 function closeEditor() {
