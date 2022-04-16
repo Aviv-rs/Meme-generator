@@ -21,8 +21,7 @@
 }
 
 .meme-gallery {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
+  gap: 1.6rem;
 }
 
 .meme {
