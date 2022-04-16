@@ -1,16 +1,15 @@
 .editor-page {
   background-color: var(--secondary-clr-300);
-  padding-inline-end: 2rem;
-  padding-inline-start: 2rem;
+
   align-items: center;
 }
 
 .control-box {
   background-color: var(--secondary-clr-300);
-  grid: repeat(6, 1fr) / repeat(5, 1fr);
+  grid: repeat(5, 1fr) / repeat(5, 1fr);
   gap: 1rem;
   height: 500px;
-  width: 500px;
+  max-width: 500px;
 }
 
 .meme-text {
@@ -18,7 +17,7 @@
 }
 
 .line-controls {
-  grid-column: 2/5;
+  grid-column: 2 / span 3;
   margin: auto;
 }
 
@@ -54,8 +53,4 @@
   cursor: pointer;
   height: 100%;
   width: 100%;
-}
-
-.canvas-container {
-  width: fit-content;
 }

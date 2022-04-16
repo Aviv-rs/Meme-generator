@@ -9,6 +9,30 @@ function onEditorInit(imgId) {
   createMeme(imgId)
   renderMeme(imgId)
   openEditor()
+  resizeCanvas()
+  addListeners()
+}
+
+function addListeners() {
+  window.addEventListener('resize', () => {
+    resizeCanvas()
+    renderCanvasAsImg()
+  })
+}
+
+function resizeCanvas() {
+  const elContainer = document.querySelector('.canvas-container')
+  gElCanvas.width = elContainer.offsetWidth
+  gElCanvas.height = gElCanvas.width
+}
+
+function renderCanvasAsImg() {
+  const img = new Image()
+  const src = gCanvasURL
+  img.src = src
+  img.onload = () => {
+    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+  }
 }
 
 function onSetLineText(lineTxt) {
@@ -49,7 +73,6 @@ function onAddLine() {
 }
 function onRemoveLine() {
   const meme = getMeme()
-  // debugger
   removeLine()
   renderMeme(meme.selectedImgId)
 }
@@ -76,9 +99,9 @@ function onDownloadMeme(elLink) {
   elLink.download = 'my meme'
 }
 
-// function saveCanvasAsUrl() {
-//   gCanvasURL = gElCanvas.toDataURL()
-// }
+function saveCanvasAsUrl() {
+  gCanvasURL = gElCanvas.toDataURL()
+}
 
 function renderCanvasAsImg() {
   const img = new Image()
@@ -123,6 +146,7 @@ function renderMeme(imgId) {
 
         drawRect(x, y, txtMetrics.width, txtHeight)
       }
+      saveCanvasAsUrl()
     })
   }
 }
