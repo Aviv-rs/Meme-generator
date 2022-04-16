@@ -56,3 +56,8 @@ function closeModalAbout(ev) {
   if (ev.target !== modal) return
   modal.style.display = 'none'
 }
+
+function onPressClose() {
+  const modal = document.querySelector('.modal-about')
+  modal.style.display = 'none'
+}
