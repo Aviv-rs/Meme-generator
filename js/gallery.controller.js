@@ -53,7 +53,6 @@ function onOpenAbout() {
 
 function closeModalAbout(ev) {
   const modal = document.querySelector('.modal-about')
-  const modalContent = document.querySelector('.modal-about .modal-content')
-  if (ev.target === modalContent) return
+  if (ev.target !== modal) return
   modal.style.display = 'none'
 }
