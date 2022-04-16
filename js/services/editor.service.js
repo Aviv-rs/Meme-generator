@@ -61,12 +61,14 @@ function isSelectedLinePressed(clickedPos) {
   const selectedLine = getSelectedLine()
   const txtMetrics = gCtx.measureText(selectedLine.txt)
   const txtWidth = txtMetrics.width
-  const { pos } = selectedLine
+  const pos = selectedLine.pos
+  if (selectedLine.baseLine === 'bottom') pos.y -= selectedLine.size
+  if (selectedLine.baseLine === 'center') pos.y -= selectedLine.size / 2
   return (
-    clickedPos.x > pos.x - txtWidth / 2 &&
-    clickedPos.x < pos.x + txtWidth / 2 &&
-    clickedPos.y > pos.y &&
-    clickedPos.y < pos.y + selectedLine.size
+    clickedPos.x >= pos.x - txtWidth / 2 &&
+    clickedPos.x <= pos.x + txtWidth / 2 &&
+    clickedPos.y >= pos.y &&
+    clickedPos.y <= pos.y + selectedLine.size
   )
 }
 
@@ -88,34 +90,17 @@ function addLine() {
     isDrag: false,
     pos: { x: canvas.width / 2, y: canvas.height / 2 },
   }
-  switch (gMeme.lines.length) {
-    case 0:
-      newLine.baseLine = 'top'
-      gMeme.lines.push(newLine)
-      break
-    case 1:
-      newLine.baseLine = gMeme.lines[0].baseLine === 'bottom' ? 'top' : 'bottom'
-      gMeme.lines.push(newLine)
-      break
-    case 2:
-      const newLines = [
-        gMeme.lines[0],
-        newLine,
-        gMeme.lines[gMeme.lines.length - 1],
-      ]
-      gMeme.lines = newLines
-      break
-    default:
-      gMeme.lines.splice(1, 0, newLine)
-  }
 
-  gMeme.selectedLineIdx = 0
+  gMeme.lines.splice(1, 0, newLine)
+
+  gMeme.selectedLineIdx = 1
 }
 
 function removeLine() {
   gMeme.lines.splice(gMeme.selectedLineIdx, 1)
 
-  gMeme.selectedLineIdx--
+  if (gMeme.lines.length <= 1) gMeme.selectedLineIdx = 0
+  else gMeme.selectedLineIdx--
 }
 
 function setLineDrag(isDrag) {

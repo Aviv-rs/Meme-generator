@@ -157,7 +157,7 @@ function onSwitchLine() {
 function onAddLine() {
   const meme = getMeme()
   addLine()
-  meme.selectedLineIdx = 0
+  // meme.selectedLineIdx = 0
   renderMeme(meme.selectedImgId)
 }
 function onRemoveLine() {

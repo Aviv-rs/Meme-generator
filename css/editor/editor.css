@@ -54,3 +54,7 @@
   height: 100%;
   width: 100%;
 }
+
+.control-box .btn-download {
+  grid-column: 2;
+}
