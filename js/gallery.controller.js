@@ -45,3 +45,15 @@ function openGallery() {
 function onToggleMenu() {
   document.body.classList.toggle('menu-open')
 }
+
+function onOpenAbout() {
+  const modal = document.querySelector('.modal-about')
+  modal.style.display = 'block'
+}
+
+function closeModalAbout(ev) {
+  const modal = document.querySelector('.modal-about')
+  const modalContent = document.querySelector('.modal-about .modal-content')
+  if (ev.target === modalContent) return
+  modal.style.display = 'none'
+}

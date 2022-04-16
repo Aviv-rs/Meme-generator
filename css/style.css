@@ -9,6 +9,7 @@
 
 /* General Components */
 
+@import "components/modal-about.css";
 @import "components/main-header.css";
 
 /* Meme selection gallery */
