@@ -9,13 +9,16 @@ function onEditorInit(imgId) {
   createMeme(imgId)
   renderMeme(imgId)
   openEditor()
+  resizeCanvas()
   addListeners()
 }
 
 function addListeners() {
+  const meme = getMeme()
+
   window.addEventListener('resize', () => {
     resizeCanvas()
-    renderCanvasAsImg()
+    renderMeme(meme.selectedImgId)
   })
 }
 
@@ -23,15 +26,6 @@ function resizeCanvas() {
   const elContainer = document.querySelector('.canvas-container')
   gElCanvas.width = elContainer.offsetWidth
   gElCanvas.height = gElCanvas.width
-}
-
-function renderCanvasAsImg() {
-  const img = new Image()
-  const src = gCanvasURL
-  img.src = src
-  img.onload = () => {
-    gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-  }
 }
 
 function onSetLineText(lineTxt) {
@@ -90,12 +84,9 @@ function closeGallery() {
   document.querySelector('.gallery-page').classList.add('hidden')
 }
 
-function onDownloadMeme(elLink) {
+function onDownloadMeme() {
   const meme = getMeme()
   renderMeme(meme.selectedImgId, true)
-
-  elLink.href = gElCanvas.toDataURL()
-  elLink.download = 'my meme'
 }
 
 function saveCanvasAsUrl() {
@@ -111,7 +102,8 @@ function renderCanvasAsImg() {
   }
 }
 
-function renderMeme(imgId) {
+function renderMeme(imgId, isDownload) {
+  const elLink = document.querySelector('.download-meme')
   const meme = getMeme()
   const imgUrl = getImgById(imgId).url
   const img = new Image()
@@ -134,7 +126,8 @@ function renderMeme(imgId) {
         y = gElCanvas.height - 10
       }
       drawText(line.txt, line.color, x, y, line.align, line.baseLine)
-      if (idx === meme.selectedLineIdx) {
+
+      if (idx === meme.selectedLineIdx && !isDownload) {
         const txtHeight = line.size
         if (line.align === 'center') x -= txtMetrics.width / 2
         else if (line.align === 'right') x -= txtMetrics.width
@@ -145,8 +138,12 @@ function renderMeme(imgId) {
 
         drawRect(x, y, txtMetrics.width, txtHeight)
       }
-      saveCanvasAsUrl()
     })
+    if (isDownload) {
+      elLink.href = gElCanvas.toDataURL()
+      elLink.download = 'my meme'
+      elLink.click()
+    }
   }
 }
 

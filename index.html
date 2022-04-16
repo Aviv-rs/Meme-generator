@@ -11,7 +11,7 @@
   <body onload="onGalleryInit()">
     <div class="page-container">
       <header class="main-header flex space-between">
-        <div class="logo-container">
+        <div onclick="onMoveToGallery()" class="logo-container">
           <div class="logo-img-container">
             <img class="logo-img" src="img/logo-bw.png" alt="img" />
           </div>
@@ -44,39 +44,27 @@
           />
           <ul class="genre-list clean-list flex">
             <li class="genre">
-              <button
-                onclick="onFilterByGenre(this.innerText)"
-                class="choose-genre"
-              >
+              <button onclick="onFilterByGenre(this)" class="choose-genre">
                 Cute
               </button>
             </li>
             <li class="genre">
-              <button
-                onclick="onFilterByGenre(this.innerText)"
-                class="choose-genre"
-              >
+              <button onclick="onFilterByGenre(this)" class="choose-genre">
                 Funny
               </button>
             </li>
             <li class="genre">
-              <button
-                onclick="onFilterByGenre(this.innerText)"
-                class="choose-genre"
-              >
+              <button onclick="onFilterByGenre(this)" class="choose-genre">
                 Movies
               </button>
             </li>
             <li class="genre">
-              <button
-                onclick="onFilterByGenre(this.innerText)"
-                class="choose-genre"
-              >
+              <button onclick="onFilterByGenre(this)" class="choose-genre">
                 Politics
               </button>
             </li>
             <li class="genre">
-              <button onclick="onFilterByGenre('')" class="choose-genre">
+              <button onclick="onFilterByGenre(this)" class="choose-genre">
                 All
               </button>
             </li>
@@ -147,9 +135,8 @@
             <button onclick="onAlignTxt('R')" class="btn-align-R styled-btn">
               ⇶
             </button>
-            <a href="#" onclick="onDownloadMeme(this)" download="my meme"
-              >Download</a
-            >
+            <button onclick="onDownloadMeme()">Download</button>
+            <a class="download-meme" href="#"></a>
           </div>
         </div>
       </section>

@@ -10,7 +10,6 @@
 /* General Components */
 
 @import "components/main-header.css";
-@import "components/main-footer.css";
 
 /* Meme selection gallery */
 @import "gallery/gallery.css";

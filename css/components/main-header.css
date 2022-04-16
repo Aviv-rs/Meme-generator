@@ -11,6 +11,7 @@
 
 .logo-container {
   align-self: flex-end;
+  cursor: pointer;
 }
 
 .main-header .logo-img-container {

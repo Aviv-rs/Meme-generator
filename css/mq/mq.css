@@ -122,18 +122,10 @@
   .page-container {
     overflow: auto;
   }
-
-  /* .editor-page .text-controls {
-    grid-column: 2 / 5;
-  } */
 }
 
 /* medium */
 @media (min-width: 900px) {
-  html {
-    font-size: 14px;
-  }
-
   .page-container.gallery-page {
     max-width: 890px;
   }

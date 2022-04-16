@@ -16,6 +16,7 @@ function renderGallery(filter) {
 }
 
 function onMoveToGallery() {
+  document.body.classList.remove('menu-open')
   document.querySelector('.meme-text').value = ''
   closeEditor()
   openGallery()
@@ -25,8 +26,10 @@ function onSearchMeme(keyword) {
   renderGallery(keyword)
 }
 
-function onFilterByGenre(genre) {
-  renderGallery(genre)
+function onFilterByGenre(elGenre) {
+  let filter = elGenre.innerText
+  if (filter === 'All') filter = ''
+  renderGallery(filter)
 }
 
 function closeEditor() {
